@@ -20,23 +20,26 @@ int main(int argc, char* argv[]){
 
     filename.open(argv[1]);
 
-    //another notification for the user to submit a valid file name if the file is not now open. 
+    //notification if the file is not open
     if(!filename.is_open()){ 
         cout << "Either the file is open (and thus locked), or you have provided an invalid filename. Please verify and try again." << endl;
     }
 
-    //est map vals
+    //establish dictionary values
     map<char, int> dict;
     for(char i = 'a'; i <= 'z'; i++){dict.insert( pair<char, int> (i, 0));}
 
+    //read each line
     while(getline(filename,line1, '\n')){
 
+        //tokenize line
         stringstream filename_ss(line1);
         while(getline(filename_ss, line2, ' ')){
 
             bool valid = true;
             while(valid){
 
+                //score word
                 for (int i=0; i<line2.length(); i++){
                     if(isalpha(line2.at(i))){
                         dict[tolower(line2.at(i))]+=1;
@@ -45,7 +48,7 @@ int main(int argc, char* argv[]){
                     }
                 }
 
-                //if still valid, then word qualifies, update the score now :)
+                //if word valid then word qualifies. update the score :)
                 if(valid){
                     for(char i = 'a'; i <= 'z'; i++){
                         if(dict[i] > maxvalue){maxvalue = dict[i];}
